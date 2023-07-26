@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="logImpl" value="SLF4J" />
+	</settings>
+	<typeHandlers>
+		<package name="armybuilder.db.typehandler"/>
+	</typeHandlers>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${mybatis.driver}" />
+				<property name="url" value="${mybatis.url}" />
+				<property name="username" value="${mybatis.username}" />
+				<property name="password" value="${mybatis.password}" />
+				<property name="poolMaximumActiveConnections" value="10" />
+				<property name="poolMaximumIdleConnections" value="2" />
+				<property name="poolPingQuery" value="SELECT 1" />
+				<property name="poolPingEnabled" value="true" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<package name="home.iot.db.dao"/>
+	</mappers>
+</configuration>
