@@ -9,6 +9,6 @@
 <title>HomeIOT</title>
 </head>
 <body>
-test
+${captor.lastValue} ${captor.lastValueDate}
 </body>
 </html>

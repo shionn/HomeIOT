@@ -2,10 +2,6 @@ package home.iot;
 
 import java.util.TimeZone;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration.Dynamic;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
+	public void onStartup(jakarta.servlet.ServletContext servletContext) throws jakarta.servlet.ServletException {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
 		super.onStartup(servletContext);
 	}
@@ -41,7 +37,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	}
 
 	@Override
-	protected void customizeRegistration(Dynamic registration) {
+	protected void customizeRegistration(jakarta.servlet.ServletRegistration.Dynamic registration) {
 		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 		super.customizeRegistration(registration);
 	}
