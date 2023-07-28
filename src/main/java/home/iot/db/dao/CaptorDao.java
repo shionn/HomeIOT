@@ -1,5 +1,6 @@
 package home.iot.db.dao;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -15,5 +16,8 @@ public interface CaptorDao {
 
 	@Update("UPDATE captor SET last_value = #{value}, last_value_date = CURRENT_TIMESTAMP WHERE id = #{id}")
 	void updateLastValue(@Param("id") int id, @Param("value") String value);
+
+	@Insert("INSERT INTO captor_value (captor, value) VALUES (#{id}, #{value})")
+	void insertValue(@Param("id") int id, @Param("value") String value);
 
 }

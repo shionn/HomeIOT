@@ -33,7 +33,6 @@
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<configuration>
-					<!-- TODO -->
 					<url>http://HomeIOT:80/manager/text</url>
 					<server>Proxmox</server>
 					<path>/</path>

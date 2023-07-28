@@ -2,9 +2,13 @@ package home.iot;
 
 import java.util.TimeZone;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -65,5 +69,11 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 			registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 		}
 
+	}
+
+	@Bean
+	@Scope(value = "prototype")
+	public Logger logger(InjectionPoint point) {
+		return LoggerFactory.getLogger(point.getClass());
 	}
 }
