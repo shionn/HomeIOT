@@ -16,8 +16,8 @@
 #define SSID_NAME "AsusHome"
 #define SSID_PASS "aazzeerrttyy"
 
-#define HOST "http://192.168.50.69:8080/HomeIOT/captor/101"
-// #define HOST "http://homeiot/captor/101"
+// #define HOST "http://192.168.50.69:8080/HomeIOT/captor/101"
+#define HOST "http://homeiot/captor/100"
 
 
 
@@ -56,8 +56,8 @@ void reconnectIfNeed() {
 }
 
 Scheduler runner;
-Task readTemperatureTask(10 * TASK_SECOND, TASK_FOREVER, &readTemperature, &runner, true);
-Task reconnectIfNeedTask(10 * TASK_MINUTE, TASK_FOREVER, &reconnectIfNeed, &runner, true);
+Task readTemperatureTask(10 * TASK_MINUTE, TASK_FOREVER, &readTemperature, &runner, true);
+Task reconnectIfNeedTask(10 * TASK_SECOND, TASK_FOREVER, &reconnectIfNeed, &runner, true);
 
 void initNetwork() {
 	WiFi.disconnect();

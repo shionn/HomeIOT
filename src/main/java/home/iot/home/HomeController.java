@@ -16,6 +16,6 @@ public class HomeController {
 
 	@GetMapping(path = "/")
 	public ModelAndView home() {
-		return new ModelAndView("home").addObject("captor", sessionn.getMapper(CaptorDao.class).read(101));
+		return new ModelAndView("home").addObject("captor", sessionn.getMapper(CaptorDao.class).read(100));
 	}
 }

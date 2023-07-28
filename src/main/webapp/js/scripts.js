@@ -1,5 +1,5 @@
 'use strict';
-// version 1.4
+// version 1.5
 
 let _q = function(obj) {
 	this.obj = obj;
@@ -164,10 +164,14 @@ _ajax.prototype.header = function(name, value) {
 _ajax.prototype.success = function(success) {
 	this.req.onreadystatechange = function() {
 		if (this.readyState === XMLHttpRequest.DONE) {
-			if (this.status === 200) {
+			if (this.status === 200 || this.status === 202) {
 				try {
 					let contentType = this.getResponseHeader("Content-Type").split(';')[0];
-					success(q(new DOMParser().parseFromString(this.response, contentType)));
+					if ("application/json" === contentType) {
+						success(JSON.parse(this.response));
+					} else {
+						success(q(new DOMParser().parseFromString(this.response, contentType)));
+					}
 				} catch (error) {
 					console.log(error);
 					success(this.response);

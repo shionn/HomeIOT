@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,5 +11,9 @@
 </head>
 <body>
 ${captor.lastValue} ${captor.lastValueDate}
+<canvas data-captor="101"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<spring:url value="js/scripts.js"/>"></script>
+<script src="<spring:url value="js/autochart.js"/>"></script>
 </body>
 </html>
