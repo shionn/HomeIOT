@@ -19,7 +19,7 @@
 // #define HOST "http://192.168.50.69:8080/HomeIOT/captor/101"
 #define HOST "http://homeiot/captor/100"
 
-
+#define AVG_TEMP_READ 5
 
 #define BUTTON D5
 
@@ -31,9 +31,20 @@ HTTPClient http;
 
 float temperature = -1;
 
+float readAvgTemperature() {
+	float temp = 0;
+	for (int i = 0; i < AVG_TEMP_READ; i++) {
+		temp += dht.getTemperature();
+		// Serial.println(i + " " + String(temp));
+		delay(10);
+	}
+	return temp / AVG_TEMP_READ;
+}
+
 void readTemperature() {
 	if (http.begin(client, HOST)) {
-		temperature = dht.getTemperature();
+		temperature = readAvgTemperature();
+		Serial.println("Avg " + String(temperature));
 		int status = http.PUT(String(temperature));
 		if (status != 202) {
 			Serial.println("Error on PUT");

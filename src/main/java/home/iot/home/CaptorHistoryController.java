@@ -31,17 +31,26 @@ public class CaptorHistoryController {
 	@ResponseBody()
 	@ResponseStatus(value = HttpStatus.OK)
 	public ChartData read(@PathVariable("id") int id) {
-		return map(session.getMapper(CaptorDao.class).read(id), session.getMapper(CaptorHistoryDao.class).read(id));
+		CaptorHistoryDao historyDao = session.getMapper(CaptorHistoryDao.class);
+		List<CaptorValue> today = historyDao.readCurrentDay(id);
+		List<CaptorValue> yesterday = historyDao.readYesterday(id);
+		return map(session.getMapper(CaptorDao.class).read(id), today, yesterday);
 	}
 
-	private ChartData map(Captor captor, List<CaptorValue> values) {
+	private ChartData map(Captor captor, List<CaptorValue> today, List<CaptorValue> yesterday) {
 		return ChartData.builder()
-				.labels(values.stream().map(v -> new SimpleDateFormat("HH:mm").format(v.getDate())).toList())
-				.datasets(Arrays.asList(ChartDataSets.builder()
-						.label(captor.getName())
-						.data(values.stream().map(v -> v.getValue()).map(Float::valueOf).toList())
-						.fill(false)
-						.build()))
+				.labels(today.stream().map(v -> new SimpleDateFormat("HH:mm").format(v.getDate())).toList())
+				.datasets(Arrays.asList(
+						ChartDataSets.builder()
+								.label(captor.getName() + " Aujourd'hui")
+								.data(today.stream().map(v -> v.getValue()).map(Float::valueOf).toList())
+								.fill(false)
+								.build()/*
+										 * , ChartDataSets.builder() .label(captor.getName() + " Hier")
+										 * .data(yesterday.stream().map(v -> v.getValue()).map(Float::valueOf).toList())
+										 * .fill(false) .build()
+										 */)
+						)
 				.build();
 	}
 
