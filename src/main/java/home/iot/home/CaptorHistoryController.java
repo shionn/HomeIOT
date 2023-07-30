@@ -1,8 +1,11 @@
 package home.iot.home;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,20 +41,47 @@ public class CaptorHistoryController {
 	}
 
 	private ChartData map(Captor captor, List<CaptorValue> today, List<CaptorValue> yesterday) {
+//Stream.concat(today.stream(), yesterday.stream()).map(c->c.getDate())
+
+		Map<String, CaptorValue> tMap = toMap(today);
+		Map<String, CaptorValue> yMap = toMap(yesterday);
+		return map(captor, tMap, yMap);
+	}
+
+	private ChartData map(Captor captor, Map<String, CaptorValue> today, Map<String, CaptorValue> yesterday) {
+		List<String> labels = new ArrayList<String>();
+		for (int h = 2; h < 26; h++) {
+			for (int m = 0; m < 60; m += 10) {
+				labels.add(String.format("%02d:%02d", h % 24, m));
+			}
+		}
 		return ChartData.builder()
-				.labels(today.stream().map(v -> new SimpleDateFormat("HH:mm").format(v.getDate())).toList())
+				.labels(labels)
 				.datasets(Arrays.asList(
 						ChartDataSets.builder()
 								.label(captor.getName() + " Aujourd'hui")
-								.data(today.stream().map(v -> v.getValue()).map(Float::valueOf).toList())
+								.data(labels.stream()
+										.map(l -> today.get(l))
+										.map(c -> c == null ? null : Float.valueOf(c.getValue()))
+										.toList())
 								.fill(false)
-								.build()/*
-										 * , ChartDataSets.builder() .label(captor.getName() + " Hier")
-										 * .data(yesterday.stream().map(v -> v.getValue()).map(Float::valueOf).toList())
-										 * .fill(false) .build()
-										 */)
+								.build(),
+						ChartDataSets.builder()
+								.label(captor.getName() + " Hier")
+								.data(labels.stream()
+										.map(l -> yesterday.get(l))
+										.map(c -> c == null ? null : Float.valueOf(c.getValue()))
+										.toList())
+								.fill(false)
+								.borderColor("#AAAAAA")
+								.build())
 						)
 				.build();
+	}
+
+	private Map<String, CaptorValue> toMap(List<CaptorValue> today) {
+		return today.stream()
+				.collect(Collectors.toMap(c -> new SimpleDateFormat("HH:mm").format(c.getDate()), c -> c));
 	}
 
 }
