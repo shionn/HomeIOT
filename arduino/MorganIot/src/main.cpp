@@ -17,7 +17,7 @@
 #define SSID_PASS "aazzeerrttyy"
 
 // #define HOST "http://192.168.50.69:8080/HomeIOT/captor/101"
-#define HOST "http://homeiot/captor/100"
+#define HOST "http://homeiot/captor/101"
 
 #define AVG_TEMP_READ 5
 
