@@ -10,10 +10,13 @@
 <title>HomeIOT</title>
 </head>
 <body>
-${captor.lastValue} ${captor.lastValueDate}
-<canvas data-captor="101"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="<spring:url value="js/scripts.js"/>"></script>
-<script src="<spring:url value="js/autochart.js"/>"></script>
+	${captor.lastValue} ${captor.lastValueDate}
+
+	<canvas data-title="Chambre Morgan" data-captor="<spring:url value="chart/roomtemp/101"/>"></canvas>
+	<canvas data-title="Bureau" data-captor="<spring:url value="chart/roomtemp/100"/>"></canvas>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="<spring:url value="js/scripts.js"/>"></script>
+	<script src="<spring:url value="js/autochart.js"/>"></script>
 </body>
 </html>

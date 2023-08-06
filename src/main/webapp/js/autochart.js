@@ -1,11 +1,20 @@
 'use strict';
 
 q(function() {
-	const ctx = q("canvas").obj[0];
-	q.ajax("captor/history/100").success(function(result) {
-		new Chart(ctx, {
-			type: 'line',
-			data: result
-		});
-	}).process();
+	q("canvas").each(function(canvas) {
+		q.ajax(canvas.attr("data-captor")).success(function(result) {
+			new Chart(canvas.obj[0], {
+				type: 'line',
+				data: result,
+				options: {
+					plugins: {
+						title: {
+							display: true,
+							text: canvas.attr("data-title")
+						}
+					}
+				}
+			});
+		}).process();
+	});
 })
