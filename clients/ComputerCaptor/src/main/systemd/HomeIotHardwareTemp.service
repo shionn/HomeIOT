@@ -1,0 +1,19 @@
+[Unit]
+Description=Home IOT Hardware Captor Temp
+After=syslog.target network.target
+
+[Service]
+SuccessExitStatus=143
+
+User=shionn
+Group=shionn
+
+Type=simple
+
+Environment="JAVA_HOME=/usr/lib/jvm/openjdk-17"
+WorkingDirectory=/home/shionn
+ExecStart=/usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar /usr/share/homeiot/ComputerCaptor-1.0.jar
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

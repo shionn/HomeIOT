@@ -7,7 +7,7 @@
 	<artifactId>ComputerCaptor</artifactId>
 	<name>ComputerCaptor</name>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 
 	<properties>
 		<version.spring>6.0.11</version.spring>
@@ -30,7 +30,17 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>home.iot.HardwareTemperature</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>

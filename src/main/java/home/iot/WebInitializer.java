@@ -5,13 +5,18 @@ import java.util.TimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -69,6 +74,21 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 			registry.addResourceHandler("/img/**").addResourceLocations("/img/");
 		}
 
+
+		@ControllerAdvice
+		public static class ExceptionHandler extends ResponseEntityExceptionHandler {
+
+			@Autowired
+			private Logger logger;
+
+			@org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
+			public ResponseEntity<String> excpetion(RuntimeException source, WebRequest request) {
+				logger.error("on " + request.getContextPath(), source);
+				return ResponseEntity.internalServerError().body(source.toString());
+			}
+
+		}
+
 	}
 
 	@Bean
@@ -76,4 +96,5 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	public Logger logger(InjectionPoint point) {
 		return LoggerFactory.getLogger(point.getClass());
 	}
+
 }
