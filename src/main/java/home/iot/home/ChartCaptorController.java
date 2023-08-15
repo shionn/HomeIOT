@@ -2,7 +2,6 @@ package home.iot.home;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import home.iot.db.dao.CaptorHistoryDao;
+import home.iot.db.dbo.Captor;
 import home.iot.db.dbo.CaptorValue;
+import home.iot.home.dto.Chart;
 import home.iot.home.dto.ChartData;
 import home.iot.home.dto.ChartDataSets;
 
@@ -31,14 +32,20 @@ public class ChartCaptorController {
 	@GetMapping(path = "/chart/roomtemp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody()
 	@ResponseStatus(value = HttpStatus.OK)
-	public ChartData read(@PathVariable("id") int id) {
-		CaptorHistoryDao historyDao = session.getMapper(CaptorHistoryDao.class);
+	public Chart read(@PathVariable("id") int id) {
+		CaptorHistoryDao dao = session.getMapper(CaptorHistoryDao.class);
+		Captor captor = dao.readCaptor(id);
 		List<String> labels = buildLabels();
-		return ChartData.builder()
-				.labels(labels)
-				.datasets(Arrays.asList(
-						buildChartDataSets(labels, "Aujourd'hui", toMap(historyDao.readCurrentDay(id)), "#000000"),
-						buildChartDataSets(labels, "Hier", toMap(historyDao.readYesterday(id)), "#AAAAAA")))
+		List<ChartDataSets> datas = new ArrayList<>();
+		datas.add(buildChartDataSets(labels, "Aujourd'hui", toMap(dao.readCurrentDay(id)), "#000000"));
+		datas.add(buildChartDataSets(labels, "Hier", toMap(dao.readYesterday(id)), "#AAAAAA"));
+//		if (id == 100) {
+//			datas.add(buildChartDataSets(labels, "CPU", toMap(dao.readCurrentDay(111)), "#0000AA"));
+//			datas.add(buildChartDataSets(labels, "GPU", toMap(dao.readCurrentDay(110)), "#AA0000"));
+//		}
+		return Chart.builder()
+				.title(captor.getName() + " " + captor.getLastValue() + captor.getUnit().getSymbol())
+				.data(ChartData.builder().labels(labels).datasets(datas).build())
 				.build();
 	}
 

@@ -5,12 +5,12 @@ q(function() {
 		q.ajax(canvas.attr("data-captor")).success(function(result) {
 			new Chart(canvas.obj[0], {
 				type: 'line',
-				data: result,
+				data: result.data,
 				options: {
 					plugins: {
 						title: {
 							display: true,
-							text: canvas.attr("data-title")
+							text: result.title
 						}
 					}
 				}
