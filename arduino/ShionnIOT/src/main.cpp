@@ -4,10 +4,9 @@
 #include <DHTesp.h>
 #include <TaskScheduler.h>
 
-
 #define SSID_NAME "AsusHome"
 #define SSID_PASS "aazzeerrttyy"
-#define HOST "http://homeiot/captor/100"
+#define HOST_CAPTOR "http://homeiot/captor/"
 
 #define AVG_TEMP_READ 5
 
@@ -23,24 +22,38 @@ DHTesp dht;
 WiFiClient client;
 HTTPClient http;
 
-float temperatureBureau = -1;
+
+float temps[] = { -1, -1, -1, -1 };
+int captor[] = { 100, 101, 111, 110 };
 int status = 202;
 
-void readTemperature() {
-	if (http.begin(client, HOST)) {
+void readLocalTemperature() {
+	if (http.begin(client, HOST_CAPTOR + String(captor[0]))) {
 		float temp = 0;
 		for (int i = 0; i < AVG_TEMP_READ; i++) {
 			temp += dht.getTemperature();
 			delay(10);
 		}
-		temperatureBureau = temp / AVG_TEMP_READ;
+		temps[0] = temp / AVG_TEMP_READ;
 		// status = http.PUT(String(temperatureBureau));
 		http.end();
 	}
 }
 
+void readServerTemperature() {
+	for (uint8_t i = 1;i < 4; i++) {
+		if (http.begin(client, HOST_CAPTOR + String(captor[i]))) {
+			if (http.GET() == 202) {
+				temps[i] = http.getString().toFloat();
+			}
+		}
+		http.end();
+	}
+}
+
 Scheduler runner;
-Task readTemperatureTask(/*10 * TASK_MINUTE */ TASK_SECOND * 5, TASK_FOREVER, &readTemperature, &runner, true);
+Task readLocalTemperatureTask(/*10 * TASK_MINUTE */ TASK_SECOND * 5, TASK_FOREVER, &readLocalTemperature, &runner, true);
+Task readServerTemperatureTask(/*10 * TASK_MINUTE */ TASK_SECOND * 5, TASK_FOREVER, &readServerTemperature, &runner, true);
 
 void initNetwork() {
 	WiFi.disconnect();
@@ -57,7 +70,7 @@ void setup() {
 	lcd.init();
 	initNetwork();
 	runner.startNow();
-	readTemperatureTask.delay();
+	readLocalTemperatureTask.delay();
 }
 
 void loop() {
@@ -68,13 +81,14 @@ void loop() {
 		lcd.print(0, 8, String(WiFi.status()));
 	} else if (status != 202) {
 		lcd.print(0, 0, F("Error on PUT"));
-		lcd.print(0, 8, F(HOST));
+		lcd.print(0, 8, F(HOST_CAPTOR));
 		lcd.print(0, 16, String(status) + " :: " + http.errorToString(status));
 	} else {
-		lcd.print(0, 0, "Bureau  " + String(temperatureBureau, 1) + "c");
-		lcd.print(0, 8, "Ch Morg " + String(23.2, 1) + "c");
-		lcd.print(0, 16, "CPU " + String(36.7, 1) + "c");
-		lcd.print(0, 24, "GPU " + String(42.5, 1) + "c");
+		lcd.print(0, 0, "Bureau  " + String(temps[0], 1) + "c");
+		lcd.print(0, 8, "Ch Morg " + String(temps[1], 1) + "c");
+		lcd.print(0, 16, "CPU " + String(temps[2], 1) + "c");
+		lcd.print(0, 24, "GPU " + String(temps[3], 1) + "c");
 	}
 	lcd.display();
+
 }
