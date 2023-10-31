@@ -15,6 +15,9 @@ SELECT
 			WHEN CURRENT_DATE THEN "today"
 			WHEN DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY) THEN "yesterday"
 			ELSE "other"
-		END USING utf8
+		END USING utf8mb4
 	) AS type
 FROM captor_value;
+
+ALTER DATABASE databasename CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE tablename CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

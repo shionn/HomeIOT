@@ -14,5 +14,6 @@ public class Captor {
 	private CaptorUnit unit;
 	private String lastValue;
 	private Date lastValueDate;
+	private CaptorValue max;
 
 }

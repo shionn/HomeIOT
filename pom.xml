@@ -46,6 +46,25 @@
 				<version>3.3.1</version>
 			</plugin>
 
+			<plugin>
+				<groupId>nl.geodienstencentrum.maven</groupId>
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>3.7.2</version>
+				<executions>
+					<execution>
+						<id>sass</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>update-stylesheets</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sassSourceDirectory>src/main/sass/</sassSourceDirectory>
+					<destination>src/main/webapp/css/</destination>
+				</configuration>
+			</plugin>
+
 		</plugins>
 		<resources>
 			<resource>
