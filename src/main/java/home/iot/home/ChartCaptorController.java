@@ -80,11 +80,17 @@ public class ChartCaptorController {
 				.label(name)
 				.data(labels.stream()
 						.map(l -> datas.get(l))
-						.map(c -> c == null ? null : Float.valueOf(c.getValue()))
+						.map(c -> getCaptorFloatValue(c))
 						.toList())
 				.borderColor(color)
 				.fill(false)
 				.build();
+	}
+
+	private Float getCaptorFloatValue(CaptorValue c) {
+		if (c == null || "nan".equals(c.getValue()))
+			return null;
+		return Float.valueOf(c.getValue());
 	}
 
 	private Map<String, CaptorValue> toMap(List<CaptorValue> data) {
