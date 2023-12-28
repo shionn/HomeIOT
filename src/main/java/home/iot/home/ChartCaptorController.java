@@ -66,12 +66,16 @@ public class ChartCaptorController {
 
 	private List<String> buildLabels() {
 		List<String> labels = new ArrayList<String>();
-		for (int h = 2; h < 26; h++) {
+		for (int h = startOfDay(); h < 24 + startOfDay(); h++) {
 			for (int m = 0; m < 60; m += 10) {
 				labels.add(String.format("%02d:%02d", h % 24, m));
 			}
 		}
 		return labels;
+	}
+
+	private int startOfDay() {
+		return 1;
 	}
 
 	private ChartDataSets buildChartDataSets(List<String> labels, String name, Map<String, CaptorValue> datas,
