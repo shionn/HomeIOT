@@ -51,6 +51,7 @@ public class AverageCaptor {
 				}
 				line = reader.readLine();
 			}
+			System.out.println(countTemp + " cpu " + cpuTemp + " gpu " + gpuTemp);
 			countTemp++;
 		} catch (IOException e) {
 			e.printStackTrace();
