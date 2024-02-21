@@ -14,7 +14,8 @@ WiFiClient client;
 HTTPClient http;
 
 
-int captor = 200;
+// int captor = 200; // DEV
+int captor = 100; // Bureau
 
 void readLocalTemperature() {
 	if (http.begin(client, HOST_CAPTOR + String(captor))) {

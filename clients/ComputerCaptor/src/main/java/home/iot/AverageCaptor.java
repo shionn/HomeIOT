@@ -32,7 +32,7 @@ public class AverageCaptor {
 			public void run() {
 				send();
 			}
-		}, 1, 10, TimeUnit.MINUTES);
+		}, 10, 10, TimeUnit.MINUTES);
 
 	}
 
@@ -65,6 +65,8 @@ public class AverageCaptor {
 				String gpu = gpuTemp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
 				send(Consts.CPU_CAPTOR, cpu);
 				send(Consts.GPU_CAPTOR, gpu);
+				cpuTemp = BigDecimal.ZERO;
+				gpuTemp = BigDecimal.ZERO;
 				countTemp = 0;
 			} catch (IOException e) {
 				e.printStackTrace();
