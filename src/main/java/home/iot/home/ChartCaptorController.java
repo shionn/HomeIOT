@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import home.iot.db.dao.CaptorHistoryDao;
 import home.iot.db.dbo.Captor;
 import home.iot.db.dbo.CaptorValue;
+import home.iot.home.chart.ChartDescription;
+import home.iot.home.chart.ChartLineDescription;
 import home.iot.home.dto.Chart;
 import home.iot.home.dto.ChartData;
 import home.iot.home.dto.ChartDataSets;
@@ -29,18 +31,19 @@ public class ChartCaptorController {
 	@Autowired
 	private SqlSession session;
 
-	@GetMapping(path = "/chart/roomtemp/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody()
+	@GetMapping(path = "/chart/{description}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	@ResponseStatus(value = HttpStatus.OK)
-	public Chart read(@PathVariable("id") int id) {
+	public Chart read(@PathVariable("description") ChartDescription description) {
 		CaptorHistoryDao dao = session.getMapper(CaptorHistoryDao.class);
-		Captor captor = dao.readCaptor(id);
+		Captor captor = dao.readCaptor(description.getId());
 		List<String> labels = buildLabels();
 		List<ChartDataSets> datas = new ArrayList<>();
-		datas.add(buildChartDataSets(labels, "Aujourd'hui", toMap(dao.readCurrentDay(id)), "#000000"));
-		datas.add(buildChartDataSets(labels, "Hier", toMap(dao.readYesterday(id)), "#AAAAAA"));
+		for (ChartLineDescription line : description.getLines()) {
+			datas.add(buildChartDataSets(labels, line.getTitle(), toMap(line.getSource().apply(dao)), line.getColor()));
+		}
 		return Chart.builder()
-				.title(captor.getName() + " " + captor.getLastValue() + captor.getUnit().getSymbol())
+				.title(description.getName() + " " + captor.getLastValue() + captor.getUnit().getSymbol())
 				.data(ChartData.builder().labels(labels).datasets(datas).build())
 				.build();
 	}
@@ -75,7 +78,8 @@ public class ChartCaptorController {
 	}
 
 	private int startOfDay() {
-		return 1;
+		// ici on definit le debut de la journee ete / hiver
+		return 2;
 	}
 
 	private ChartDataSets buildChartDataSets(List<String> labels, String name, Map<String, CaptorValue> datas,

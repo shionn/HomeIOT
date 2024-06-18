@@ -11,10 +11,20 @@
 <title>HomeIOT</title>
 </head>
 <body>
+	<nav>
+		<ul>
+			<li><a href="<spring:url value="chart/roomtemp/100"/>">Bureau</a></li>
+			<li><a>Bureau (30J)</a></li>
+			<li><a href="<spring:url value="chart/O11DW"/>">O11DW</a></li>
+			<li><a>Morgan</a></li>
+			<li><a>Morgan (30J)</a></li>
+		</ul>
+	</nav>
 	<div class="captors">
-		<canvas data-title="Bureau" data-captor="<spring:url value="chart/roomtemp/100"/>"></canvas>
+		<canvas data-title="Bureau" data-captor="<spring:url value="chart/BureauDay"/>"></canvas>
+<%-- 		<canvas data-title="Bureau (30J)" data-captor="<spring:url value="chart/BureauMonth"/>"></canvas> --%>
 		<canvas data-title="O11DW" data-captor="<spring:url value="chart/O11DW"/>"></canvas>
-		<canvas data-title="Chambre Morgan" data-captor="<spring:url value="chart/roomtemp/101"/>"></canvas>
+		<canvas data-title="Chambre Morgan" data-captor="<spring:url value="chart/ChambreMorgan"/>"></canvas>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
