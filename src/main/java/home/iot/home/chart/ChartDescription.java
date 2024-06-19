@@ -3,6 +3,9 @@ package home.iot.home.chart;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public enum ChartDescription {
 	BureauDay(
 			"Bureau",
@@ -17,7 +20,8 @@ public enum ChartDescription {
 							.title("Hier")
 							.source(dao -> dao.readYesterday(100))
 							.color("#AAAAAA")
-							.build())),
+							.build()),
+			ChartAxeX.Hours),
 	BureauMonth(
 			"Bureau (30J)",
 			100,
@@ -25,13 +29,24 @@ public enum ChartDescription {
 					ChartLineDescription.builder()
 							.title("Max")
 							.source(dao -> dao.readLastMonth(100, "max"))
-							.color("#000000")
+							.color("#FF0000")
 							.build(),
 					ChartLineDescription.builder()
 							.title("Min")
 							.source(dao -> dao.readLastMonth(100, "min"))
-							.color("#000000")
-							.build())),
+							.color("#0000FF")
+							.build(),
+					ChartLineDescription.builder()
+							.title("Max")
+							.source(dao -> dao.readLastYearMonth(100, "max"))
+							.color("#AA0000")
+							.build(),
+					ChartLineDescription.builder()
+							.title("Min")
+							.source(dao -> dao.readLastYearMonth(100, "min"))
+							.color("#0000AA")
+							.build()),
+			ChartAxeX.Month),
 	ChambreMorgan(
 			"Chambre Morgan",
 			101,
@@ -45,7 +60,33 @@ public enum ChartDescription {
 							.title("Hier")
 							.source(dao -> dao.readYesterday(101))
 							.color("#AAAAAA")
-							.build())),
+							.build()),
+			ChartAxeX.Hours),
+	ChambreMorganMonth(
+			"Chambre Morgan (30J)",
+			101,
+			Arrays.asList(
+					ChartLineDescription.builder()
+							.title("Max")
+							.source(dao -> dao.readLastMonth(101, "max"))
+							.color("#FF0000")
+							.build(),
+					ChartLineDescription.builder()
+							.title("Min")
+							.source(dao -> dao.readLastMonth(101, "min"))
+							.color("#0000FF")
+							.build(),
+					ChartLineDescription.builder()
+							.title("Max")
+							.source(dao -> dao.readLastYearMonth(101, "max"))
+							.color("#AA0000")
+							.build(),
+					ChartLineDescription.builder()
+							.title("Min")
+							.source(dao -> dao.readLastYearMonth(101, "min"))
+							.color("#0000AA")
+							.build()),
+			ChartAxeX.Month),
 
 
 	;
@@ -53,24 +94,13 @@ public enum ChartDescription {
 	private String name;
 	private int id;
 	private List<ChartLineDescription> lines;
+	private ChartAxeX axeX;
 
-	private ChartDescription(String name, int id, List<ChartLineDescription> lines) {
+	private ChartDescription(String name, int id, List<ChartLineDescription> lines, ChartAxeX axeX) {
 		this.name = name;
 		this.id = id;
 		this.lines = lines;
-
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public List<ChartLineDescription> getLines() {
-		return lines;
+		this.axeX = axeX;
 	}
 
 }

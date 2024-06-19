@@ -27,12 +27,21 @@ public interface CaptorHistoryDao {
 	@Select("SELECT * FROM captor_value_today WHERE captor = #{id} AND DATE(date) = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY) ORDER BY date ASC")
 	List<CaptorValue> readYesterday(int id);
 
-	@Select("SELECT * FROM captor_value_day "
+	@Select("SELECT value, date_c AS date FROM captor_value_day "
 			+ "WHERE captor = #{id} "
 			+ "AND date_c BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND CURRENT_DATE "
 			+ "AND type = #{type} "
 			+ "ORDER BY date_c ASC")
 	List<CaptorValue> readLastMonth(@Param("id")int id, @Param("type") String type);
+
+	@Select("SELECT value, date_c AS date FROM captor_value_day "
+			+ "WHERE captor = #{id} "
+			+ "AND date_c BETWEEN "
+			+ "      DATE_SUB(CURRENT_DATE, INTERVAL 13 MONTH) "
+			+ "  AND DATE_SUB(CURRENT_DATE, INTERVAL 12 MONTH) "
+			+ "AND type = #{type} "
+			+ "ORDER BY date_c ASC")
+	List<CaptorValue> readLastYearMonth(@Param("id")int id, @Param("type") String type);
 
 
 }

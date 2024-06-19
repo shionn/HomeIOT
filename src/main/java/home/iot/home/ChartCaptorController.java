@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import home.iot.db.dao.CaptorHistoryDao;
 import home.iot.db.dbo.Captor;
 import home.iot.db.dbo.CaptorValue;
+import home.iot.home.chart.ChartAxeX;
 import home.iot.home.chart.ChartDescription;
 import home.iot.home.chart.ChartLineDescription;
 import home.iot.home.dto.Chart;
@@ -37,10 +38,11 @@ public class ChartCaptorController {
 	public Chart read(@PathVariable("description") ChartDescription description) {
 		CaptorHistoryDao dao = session.getMapper(CaptorHistoryDao.class);
 		Captor captor = dao.readCaptor(description.getId());
-		List<String> labels = buildLabels();
+		List<String> labels = description.getAxeX().getLabels().get();
 		List<ChartDataSets> datas = new ArrayList<>();
 		for (ChartLineDescription line : description.getLines()) {
-			datas.add(buildChartDataSets(labels, line.getTitle(), toMap(line.getSource().apply(dao)), line.getColor()));
+			datas.add(buildChartDataSets(labels, line.getTitle(),
+					toMap(line.getSource().apply(dao), description.getAxeX()), line.getColor()));
 		}
 		return Chart.builder()
 				.title(description.getName() + " " + captor.getLastValue() + captor.getUnit().getSymbol())
@@ -53,10 +55,10 @@ public class ChartCaptorController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public Chart o11dw() {
 		CaptorHistoryDao dao = session.getMapper(CaptorHistoryDao.class);
-		List<String> labels = buildLabels();
+		List<String> labels = ChartAxeX.Hours.getLabels().get();
 		List<ChartDataSets> datas = new ArrayList<>();
-		datas.add(buildChartDataSets(labels, "CPU", toMap(dao.readCurrentDay(111)), "#0000AA"));
-		datas.add(buildChartDataSets(labels, "GPU", toMap(dao.readCurrentDay(110)), "#AA0000"));
+		datas.add(buildChartDataSets(labels, "CPU", toMap(dao.readCurrentDay(111), ChartAxeX.Hours), "#0000AA"));
+		datas.add(buildChartDataSets(labels, "GPU", toMap(dao.readCurrentDay(110), ChartAxeX.Hours), "#AA0000"));
 		Captor cpu = dao.readCaptor(111);
 		Captor gpu = dao.readCaptor(110);
 		return Chart.builder()
@@ -67,29 +69,11 @@ public class ChartCaptorController {
 
 	}
 
-	private List<String> buildLabels() {
-		List<String> labels = new ArrayList<String>();
-		for (int h = startOfDay(); h < 24 + startOfDay(); h++) {
-			for (int m = 0; m < 60; m += 10) {
-				labels.add(String.format("%02d:%02d", h % 24, m));
-			}
-		}
-		return labels;
-	}
-
-	private int startOfDay() {
-		// ici on definit le debut de la journee ete / hiver
-		return 2;
-	}
-
 	private ChartDataSets buildChartDataSets(List<String> labels, String name, Map<String, CaptorValue> datas,
 			String color) {
 		return ChartDataSets.builder()
 				.label(name)
-				.data(labels.stream()
-						.map(l -> datas.get(l))
-						.map(c -> getCaptorFloatValue(c))
-						.toList())
+				.data(labels.stream().map(l -> datas.get(l)).map(c -> getCaptorFloatValue(c)).toList())
 				.borderColor(color)
 				.fill(false)
 				.build();
@@ -101,8 +85,8 @@ public class ChartCaptorController {
 		return Float.valueOf(c.getValue());
 	}
 
-	private Map<String, CaptorValue> toMap(List<CaptorValue> data) {
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+	private Map<String, CaptorValue> toMap(List<CaptorValue> data, ChartAxeX axeX) {
+		SimpleDateFormat format = new SimpleDateFormat(axeX.getDateFormat());
 		Map<String, CaptorValue> map = new HashMap<String, CaptorValue>();
 		data.forEach(c -> map.put(format.format(c.getDate()), c));
 		return map;

@@ -22,9 +22,10 @@
 	</nav>
 	<div class="captors">
 		<canvas data-title="Bureau" data-captor="<spring:url value="chart/BureauDay"/>"></canvas>
-<%-- 		<canvas data-title="Bureau (30J)" data-captor="<spring:url value="chart/BureauMonth"/>"></canvas> --%>
+		<canvas data-title="Bureau (30J)" data-captor="<spring:url value="chart/BureauMonth"/>"></canvas>
 		<canvas data-title="O11DW" data-captor="<spring:url value="chart/O11DW"/>"></canvas>
 		<canvas data-title="Chambre Morgan" data-captor="<spring:url value="chart/ChambreMorgan"/>"></canvas>
+		<canvas data-title="Chambre Morgan (30J)" data-captor="<spring:url value="chart/ChambreMorganMonth"/>"></canvas>
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
