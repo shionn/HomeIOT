@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,11 +14,9 @@
 <body>
 	<nav>
 		<ul>
-			<li><a href="<spring:url value="chart/roomtemp/100"/>">Bureau</a></li>
-			<li><a>Bureau (30J)</a></li>
-			<li><a href="<spring:url value="chart/O11DW"/>">O11DW</a></li>
-			<li><a>Morgan</a></li>
-			<li><a>Morgan (30J)</a></li>
+			<c:forEach items="${descriptions}" var="desc">
+				<li><a href="<spring:url value="temp/${desc}"/>">${desc.name}</a></li>
+			</c:forEach>
 		</ul>
 	</nav>
 	<div class="captors">

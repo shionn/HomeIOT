@@ -47,6 +47,21 @@ public enum ChartDescription {
 							.color("#0000AA")
 							.build()),
 			ChartAxeX.Month),
+	O11DW(
+			"O11DW",
+			111,
+			Arrays.asList(
+					ChartLineDescription.builder()
+							.title("CPU")
+							.source(dao -> dao.readCurrentDay(111))
+							.color("#0000AA")
+							.build(),
+					ChartLineDescription.builder()
+							.title("GPU")
+							.source(dao -> dao.readCurrentDay(110))
+							.color("#AA0000")
+							.build()),
+			ChartAxeX.Hours),
 	ChambreMorgan(
 			"Chambre Morgan",
 			101,
