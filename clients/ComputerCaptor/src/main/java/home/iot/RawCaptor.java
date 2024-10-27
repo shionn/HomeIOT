@@ -1,9 +1,6 @@
 package home.iot;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -11,9 +8,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RawCaptor {
+
+	private LmSensorReader reader = new LmSensorReader();
 
 
 	public void submit(ScheduledExecutorService service) {
@@ -26,22 +25,19 @@ public class RawCaptor {
 	}
 
 	private void readAndSend() {
-		try (InputStream is = Runtime.getRuntime().exec(Consts.COMMAND).getInputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-			String line = reader.readLine();
-			while (line != null) {
-				Matcher m = Consts.GPU_JUNCTION.matcher(line);
-				if (m.find()) {
-					send(Consts.GPU_CAPTOR, m.group(1));
-				}
-				m = Consts.CPU_TCTL.matcher(line);
-				if (m.find()) {
-					send(Consts.CPU_CAPTOR, m.group(1));
-				}
-				line = reader.readLine();
+		readAndSend(Consts.COMMAND_CPU, Consts.CPU_TCTL, Consts.CPU_CAPTOR);
+		readAndSend(Consts.COMMAND_GPU, Consts.GPU_JUNCTION, Consts.GPU_CAPTOR);
+		readAndSend(Consts.COMMAND_NVME0, Consts.COMPOSITE, Consts.NVME0_CAPTOR);
+	}
+
+	private void readAndSend(String command, Pattern sensor, int captor) {
+		String value = reader.read(command, sensor);
+		if (value != null) {
+			try {
+				send(captor, value);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 

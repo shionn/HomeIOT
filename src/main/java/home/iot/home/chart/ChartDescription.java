@@ -60,6 +60,16 @@ public enum ChartDescription {
 							.title("GPU")
 							.source(dao -> dao.readCurrentDay(110))
 							.color("#AA0000")
+							.build(),
+					ChartLineDescription.builder()
+							.title("NVME0")
+							.source(dao -> dao.readCurrentDay(112))
+							.color("#00AA00")
+							.build(),
+					ChartLineDescription.builder()
+							.title("NVME1")
+							.source(dao -> dao.readCurrentDay(113))
+							.color("#00AA00")
 							.build()),
 			ChartAxeX.Hours),
 	ChambreMorgan(
