@@ -62,12 +62,12 @@ public enum ChartDescription {
 							.color("#AA0000")
 							.build(),
 					ChartLineDescription.builder()
-							.title("NVME0")
+							.title("970 Pro 1To")
 							.source(dao -> dao.readCurrentDay(112))
 							.color("#00AA00")
 							.build(),
 					ChartLineDescription.builder()
-							.title("NVME1")
+							.title("970 EVO Plus 500GB")
 							.source(dao -> dao.readCurrentDay(113))
 							.color("#00AA00")
 							.build()),
