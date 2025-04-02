@@ -20,20 +20,20 @@ public class Consts {
 		public static final String COMMAND_NVME1 = "sensors nvme-pci-0400";
 	}
 
-	public class B550 {
-		public static final String COMMAND_GPU = "sensors amdgpu-pci-0900";
-		public static final String COMMAND_CPU = "sensors k10temp-pci-00c3";
-		public static final String COMMAND_NVME0 = "sensors nvme-pci-0400"; // 1TO
-		public static final String COMMAND_NVME1 = "sensors nvme-pci-0100"; // 500go
-	}
-
-	public class MSI_B550 {
+	public class MSI_B550_5800X3D {
 		public static final String COMMAND_GPU = "sensors amdgpu-pci-2d00";
 		public static final String COMMAND_CPU = "sensors k10temp-pci-00c3";
 		public static final String COMMAND_NVME0 = "sensors nvme-pci-0400"; // 1TO
 		public static final String COMMAND_NVME1 = "sensors nvme-pci-0100"; // 500go
 	}
-	
+
+	public class MSI_B550_4750G {
+		public static final String COMMAND_GPU = "sensors amdgpu-pci-300";
+		public static final String COMMAND_CPU = "sensors k10temp-pci-00c3";
+		public static final String COMMAND_NVME0 = "sensors nvme-pci-2100"; // 1TO
+		public static final String COMMAND_NVME1 = "sensors nvme-pci-2b00"; // 500go
+	}
+
 	public class Z390 {
 		public static final String COMMAND_GPU = "sensors amdgpu-pci-0300";
 		public static final String COMMAND_CPU = "sensors coretemp-isa-0000"; 
@@ -48,10 +48,10 @@ public class Consts {
 	public static final Pattern CPU_TCTL = R7_5800X3D.CPU_TCTL;
 	public static final Pattern GPU_JUNCTION = Pattern.compile("junction:[^+]*\\+(\\d+\\.\\d+)°C");
 	public static final Pattern COMPOSITE = Pattern.compile("Composite:[^+]*\\+(\\d+\\.\\d+)°C");
-	public static final String COMMAND_GPU = MSI_B550.COMMAND_GPU;
-	public static final String COMMAND_CPU = MSI_B550.COMMAND_CPU;
-	public static final String COMMAND_NVME0 = MSI_B550.COMMAND_NVME0;
-	public static final String COMMAND_NVME1 = MSI_B550.COMMAND_NVME1;
+	public static final String COMMAND_GPU = MSI_B550_4750G.COMMAND_GPU;
+	public static final String COMMAND_CPU = MSI_B550_4750G.COMMAND_CPU;
+	public static final String COMMAND_NVME0 = MSI_B550_4750G.COMMAND_NVME0;
+	public static final String COMMAND_NVME1 = MSI_B550_4750G.COMMAND_NVME1;
 	public static final String HOST = "http://homeiot/captor/";
 
 	
