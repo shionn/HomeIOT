@@ -60,6 +60,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<sassSourceDirectory>src/main/sass/fa-4.7/</sassSourceDirectory>
 					<sassSourceDirectory>src/main/sass/</sassSourceDirectory>
 					<destination>src/main/webapp/css/</destination>
 				</configuration>

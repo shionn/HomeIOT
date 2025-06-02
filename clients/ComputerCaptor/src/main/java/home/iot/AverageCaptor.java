@@ -14,8 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class AverageCaptor {
 	private BigDecimal cpuTemp = BigDecimal.ZERO;
 	private BigDecimal gpuTemp = BigDecimal.ZERO;
-	private BigDecimal nvme0Temp = BigDecimal.ZERO;
-	private BigDecimal nvme1Temp = BigDecimal.ZERO;
+	private BigDecimal nvmeTemp = BigDecimal.ZERO;
 
 	private int countTemp = 0;
 
@@ -46,16 +45,12 @@ public class AverageCaptor {
 		if (value != null) {
 			gpuTemp = gpuTemp.add(new BigDecimal(value));
 		}
-		value = reader.read(Consts.COMMAND_NVME0, Consts.COMPOSITE);
+		value = reader.read(Consts.COMMAND_NVME, Consts.COMPOSITE);
 		if (value != null) {
-			nvme0Temp = nvme0Temp.add(new BigDecimal(value));
-		}
-		value = reader.read(Consts.COMMAND_NVME1, Consts.COMPOSITE);
-		if (value != null) {
-			nvme1Temp = nvme1Temp.add(new BigDecimal(value));
+			nvmeTemp = nvmeTemp.add(new BigDecimal(value));
 		}
 		System.out.println(
-				countTemp + " cpu " + cpuTemp + " gpu " + gpuTemp + " nvme0 " + nvme0Temp + " nvme1 " + nvme1Temp);
+				countTemp + " cpu " + cpuTemp + " gpu " + gpuTemp + " nvme " + nvmeTemp);
 		countTemp++;
 	}
 
@@ -64,16 +59,13 @@ public class AverageCaptor {
 			try {
 				String cpu = cpuTemp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
 				String gpu = gpuTemp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
-				String nvme0 = nvme0Temp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
-				String nvme1 = nvme1Temp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
+				String nvme0 = nvmeTemp.divide(BigDecimal.valueOf(countTemp), 1, RoundingMode.UP).toString();
 				send(Consts.CPU_CAPTOR, cpu);
 				send(Consts.GPU_CAPTOR, gpu);
-				send(Consts.NVME0_CAPTOR, nvme0);
-				send(Consts.NVME1_CAPTOR, nvme1);
+				send(Consts.NVME_CAPTOR, nvme0);
 				cpuTemp = BigDecimal.ZERO;
 				gpuTemp = BigDecimal.ZERO;
-				nvme0Temp = BigDecimal.ZERO;
-				nvme1Temp = BigDecimal.ZERO;
+				nvmeTemp = BigDecimal.ZERO;
 				countTemp = 0;
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -1,0 +1,1 @@
+convert -dispose previous -delay 50 -loop 0 *.png favicon.gif
