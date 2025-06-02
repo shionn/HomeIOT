@@ -12,7 +12,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 <meta name="mobile-web-app-capable" content="yes" />
-<title>Painter Tracker</title>
+<title>HomeIOT</title>
 <link rel="stylesheet" href="<spring:url value="/css/mvp.css"/>" />
 <link rel="stylesheet" href="<spring:url value="/css/font-awesome.css"/>" />
 <link rel="stylesheet" href="<spring:url value="/css/style.css"/>" />
