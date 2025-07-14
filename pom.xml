@@ -78,9 +78,6 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-		</profile>
-		<profile>
-			<id>proxmox</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
