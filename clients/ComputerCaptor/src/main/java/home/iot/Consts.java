@@ -24,7 +24,7 @@ public class Consts {
 		public static final String COMMAND_GPU = "sensors amdgpu-pci-2d00";
 		public static final String COMMAND_CPU = "sensors k10temp-pci-00c3";
 		public static final String COMMAND_NVME0 = "sensors nvme-pci-0100"; // 1TO
-		public static final String COMMAND_NVME1 = "sensors nvme-pci-0400"; // 500go
+//		public static final String COMMAND_NVME1 = "sensors nvme-pci-0400"; // 500go
 	}
 
 	public class MSI_B550_4750G {

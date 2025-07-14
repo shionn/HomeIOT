@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -55,7 +56,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	// @EnableScheduling
 	@Configuration
 	@ComponentScan({ "home.iot" })
-	// @PropertySource("classpath:configuration.properties")
+	@PropertySource("classpath:ha.properties")
 	public static class WebMvcConfig implements WebMvcConfigurer {
 		@Bean
 		public InternalResourceViewResolver viewResolver() {
