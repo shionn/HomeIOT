@@ -27,5 +27,16 @@ public class HaController {
 	public String getLastValue(@PathVariable("id") String id) {
 		return service.getSensorData(id).getState();
 	}
-	
+
+	@GetMapping("/ha/{id}/{attr}")
+	@ResponseBody
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+	public String getLastValue(@PathVariable("id") String id, @PathVariable("attr") String attr) {
+		SensorState data = service.getSensorData(id);
+		return switch (attr) {
+		case "temperature" -> data.getAttributes().getTemperature();
+		default -> data.getState();
+		};
+	}
+
 }
