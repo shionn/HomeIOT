@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class HardwareTemperature {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		new HardwareTemperature().start(Mode.AVERAGE);
+		new HardwareTemperature().start(Mode.RAW);
 	}
 
 	private void start(Mode mode) throws IOException, InterruptedException {

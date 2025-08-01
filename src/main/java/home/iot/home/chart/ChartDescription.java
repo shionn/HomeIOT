@@ -62,7 +62,7 @@ public enum ChartDescription {
 							.color("#AA0000")
 							.build(),
 					ChartLineDescription.builder()
-							.title("970 Pro 1To")
+							.title("SN850X 2To")
 							.source(dao -> dao.readCurrentDay(112))
 							.color("#00AA00")
 							.build()),

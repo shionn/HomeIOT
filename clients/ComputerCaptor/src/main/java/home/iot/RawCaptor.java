@@ -21,7 +21,7 @@ public class RawCaptor {
 			public void run() {
 				readAndSend();
 			}
-		}, 1, 10, TimeUnit.MINUTES);
+		}, 1, 1, TimeUnit.MINUTES);
 	}
 
 	private void readAndSend() {
