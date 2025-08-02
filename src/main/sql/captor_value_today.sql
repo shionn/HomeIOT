@@ -7,8 +7,9 @@ SELECT captor, value, ADDTIME(CONVERT(DATE(date), DATETIME), SEC_TO_TIME(ROUND(T
 CREATE OR REPLACE VIEW captor_value_today AS
 SELECT
 	captor,
-	value,
+	AVG(value, 2) as value,
 	ADDTIME(CONVERT(DATE(date), DATETIME), SEC_TO_TIME(ROUND(TIME_TO_SEC(date) / 600)*600)) AS date,
+	ADDTIME(CONVERT(DATE(date), DATETIME), SEC_TO_TIME(ROUND(TIME_TO_SEC(date) / 600)*600)) AS g_date,
 	date AS original_date,
 	CONVERT (
 		CASE DATE(date)
@@ -17,7 +18,9 @@ SELECT
 			ELSE "other"
 		END USING utf8mb4
 	) AS type
-FROM captor_value;
+FROM captor_value
+GROUP BY captor, g_date;
+
 
 ALTER DATABASE databasename CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE tablename CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
