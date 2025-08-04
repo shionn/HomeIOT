@@ -1,0 +1,3 @@
+#define SSID_NAME "SSID"
+#define SSID_PASS "PASSWORD"
+#define HOST_NAME "TODO"
