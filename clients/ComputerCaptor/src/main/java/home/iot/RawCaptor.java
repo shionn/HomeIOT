@@ -26,7 +26,8 @@ public class RawCaptor {
 
 	private void readAndSend() {
 		readAndSend(Consts.COMMAND_CPU, Consts.CPU_TCTL, Consts.CPU_CAPTOR);
-		readAndSend(Consts.COMMAND_GPU, Consts.GPU_JUNCTION, Consts.GPU_CAPTOR);
+		readAndSend(Consts.COMMAND_GPU, Consts.GPU_EDGE, Consts.GPU_CAPTOR);
+		readAndSend(Consts.COMMAND_GPU, Consts.GPU_JUNCTION, Consts.GPU_CAPTOR_JUNCTION);
 		readAndSend(Consts.COMMAND_NVME, Consts.COMPOSITE, Consts.NVME_CAPTOR);
 	}
 

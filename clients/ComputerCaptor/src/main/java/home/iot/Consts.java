@@ -45,8 +45,10 @@ public class Consts {
 	public static final int CPU_CAPTOR = 111;
 	public static final int GPU_CAPTOR = 110;
 	public static final int NVME_CAPTOR = 112;
+	public static final int GPU_CAPTOR_JUNCTION = 114;
 	public static final Pattern CPU_TCTL = R7_5800X3D.CPU_TCTL;
 	public static final Pattern GPU_JUNCTION = Pattern.compile("junction:[^+]*\\+(\\d+\\.\\d+)°C");
+	public static final Pattern GPU_EDGE = Pattern.compile("edge:[^+]*\\+(\\d+\\.\\d+)°C");
 	public static final Pattern COMPOSITE = Pattern.compile("Composite:[^+]*\\+(\\d+\\.\\d+)°C");
 	public static final String COMMAND_GPU = MSI_B550_5800X3D.COMMAND_GPU;
 	public static final String COMMAND_CPU = MSI_B550_5800X3D.COMMAND_CPU;

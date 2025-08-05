@@ -56,10 +56,17 @@ public enum ChartDescription {
 							.source(dao -> dao.readCurrentDay(111))
 							.color("#0000AA")
 							.build(),
-					ChartLineDescription.builder()
-							.title("GPU")
+					ChartLineDescription
+							.builder()
+							.title("GPU Junction")
 							.source(dao -> dao.readCurrentDay(110))
 							.color("#AA0000")
+							.build(),
+					ChartLineDescription
+							.builder()
+							.title("GPU Edge")
+							.source(dao -> dao.readCurrentDay(114))
+							.color("#AA00AA")
 							.build(),
 					ChartLineDescription.builder()
 							.title("SN850X 2To")
