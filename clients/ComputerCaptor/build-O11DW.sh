@@ -9,3 +9,4 @@ sudo chmod 644 /etc/systemd/system/HomeIotHardwareTemp.service
 sudo systemctl daemon-reload
 sudo systemctl enable HomeIotHardwareTemp.service
 echo "fin"
+

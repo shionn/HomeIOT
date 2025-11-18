@@ -54,6 +54,18 @@
 		<profile>
 			<id>dev</id>
 		</profile>
+		<profile>
+			<id>O11DW</id>
+			<properties>
+				<computer>O11DW</computer>
+			</properties>
+		</profile>
+		<profile>
+			<id>MaxiMox</id>
+			<properties>
+				<computer>MaxiMox</computer>
+			</properties>
+		</profile>
 	</profiles>
 
 	<dependencies>
@@ -64,5 +76,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+
+
 
 </project>
