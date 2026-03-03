@@ -7,12 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import home.iot.db.dao.CaptorDao;
+import home.iot.db.dao.CaptorSubscriptionDao;
+import home.iot.db.dbo.CaptorSubscription;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class CaptorController {
@@ -38,6 +42,22 @@ public class CaptorController {
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	public String read(@PathVariable("id") int id) {
 		return session.getMapper(CaptorDao.class).read(id).getLastValue();
+	}
+
+	@PostMapping(path = "/captor/{id}/register")
+	@ResponseBody
+	@ResponseStatus(value = HttpStatus.ACCEPTED)
+	public String addSub(@PathVariable("id") int id, HttpServletRequest req) {
+		CaptorSubscriptionDao dao = session.getMapper(CaptorSubscriptionDao.class);
+		CaptorSubscription subscription = CaptorSubscription
+				.builder()
+				.captorId(id)
+				.host(req.getRemoteAddr())
+				.hostname(req.getRemoteHost())
+				.build();
+		dao.register(subscription);
+		session.commit();
+		return "OK";
 	}
 
 }
