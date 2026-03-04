@@ -1,4 +1,4 @@
-package home.iot.home;
+package home.iot.captor;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import home.iot.captor.subscription.SubscriptionNotifier;
 import home.iot.db.dao.CaptorDao;
 import home.iot.db.dao.CaptorSubscriptionDao;
 import home.iot.db.dbo.CaptorSubscription;
@@ -27,6 +28,9 @@ public class CaptorController {
 	@Autowired
 	private SqlSession session;
 
+	@Autowired
+	private SubscriptionNotifier notifier;
+
 	@PutMapping(path = "/captor/{id}")
 	@ResponseStatus(value = HttpStatus.ACCEPTED)
 	public void update(@PathVariable("id") int id, @RequestBody() String value) {
@@ -35,6 +39,7 @@ public class CaptorController {
 		dao.insertValue(id, value);
 		dao.updateLastValue(id, value);
 		session.commit();
+		notifier.notify(id);
 	}
 
 	@GetMapping(path = "/captor/{id}")

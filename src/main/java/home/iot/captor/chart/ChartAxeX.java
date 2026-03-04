@@ -1,4 +1,4 @@
-package home.iot.home.chart;
+package home.iot.captor.chart;
 
 import java.util.List;
 import java.util.function.Supplier;

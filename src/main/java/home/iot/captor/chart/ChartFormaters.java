@@ -1,4 +1,4 @@
-package home.iot.home.chart;
+package home.iot.captor.chart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

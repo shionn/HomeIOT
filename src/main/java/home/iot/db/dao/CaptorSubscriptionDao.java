@@ -19,22 +19,48 @@ public interface CaptorSubscriptionDao {
 			ORDER BY name
 			""")
 	@Results({ //
+			@Result(property = "captor.id", column = "captor_id"), //
+			@Result(property = "captorId", column = "captor_id"), //
 			@Result(property = "captor.name", column = "name"), //
 			@Result(property = "captor.lastValue", column = "last_value"), //
 			@Result(property = "captor.type", column = "type"), //
 			@Result(property = "captor.unit", column = "unit") })
-	List<CaptorSubscription> list();
+	List<CaptorSubscription> listAllCaptorSubscription();
 
-//	@Select("""
-//			SELECT *
-//			FROM captor_subscription
-//			""")
-//	@Results({ @Result(property = "captor", column = "captor", one = @One(select = "readCaptor"))
-//	})
-//	List<CaptorSubscription> list();
-//
-//	@Select("SELECT * FROM captor WHERE id = #{id}")
-//	Captor readCaptor(int id);
+	@Select("""
+			SELECT s.id, s.captor as captor_id, s.host, s.hostname, s.enable,
+			c.name, c.last_value, c.type, c.unit
+			FROM captor_subscription AS s
+			LEFT JOIN captor AS c On c.id = s.captor
+			WHERE s.captor = #{id}
+			ORDER BY name
+			""")
+	@Results({ //
+			@Result(property = "captor.id", column = "captor_id"), //
+			@Result(property = "captorId", column = "captor_id"), //
+			@Result(property = "captor.name", column = "name"), //
+			@Result(property = "captor.lastValue", column = "last_value"), //
+			@Result(property = "captor.type", column = "type"), //
+			@Result(property = "captor.unit", column = "unit") })
+	List<CaptorSubscription> listOneCaptor(int captorId);
+
+
+	@Select("""
+			SELECT s.id, s.captor as captor_id, s.host, s.hostname, s.enable,
+			c.name, c.last_value, c.type, c.unit
+			FROM captor_subscription AS s
+			LEFT JOIN captor AS c On c.id = s.captor
+			WHERE s.id = #{id}
+			""")
+	@Results({ //
+			@Result(property = "captor.id", column = "captor_id"), //
+			@Result(property = "captorId", column = "captor_id"), //
+			@Result(property = "captor.name", column = "name"), //
+			@Result(property = "captor.lastValue", column = "last_value"), //
+			@Result(property = "captor.type", column = "type"), //
+			@Result(property = "captor.unit", column = "unit") })
+	CaptorSubscription readOneSubscription(int subscriptionId);
+
 
 	@Insert("""
 			INSERT INTO captor_subscription (captor, host, hostname)
@@ -43,5 +69,7 @@ public interface CaptorSubscriptionDao {
 			hostname = #{hostname}, enable = true, updated = NOW()
 			""")
 	int register(CaptorSubscription subscription);
+
+
 
 }

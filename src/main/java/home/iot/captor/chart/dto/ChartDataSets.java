@@ -1,4 +1,4 @@
-package home.iot.home.dto;
+package home.iot.captor.chart.dto;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package home.iot.home;
+package home.iot.captor.chart;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,15 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import home.iot.captor.chart.dto.Chart;
+import home.iot.captor.chart.dto.ChartData;
+import home.iot.captor.chart.dto.ChartDataSets;
 import home.iot.db.dao.CaptorHistoryDao;
 import home.iot.db.dbo.Captor;
 import home.iot.db.dbo.CaptorValue;
-import home.iot.home.chart.ChartAxeX;
-import home.iot.home.chart.ChartDescription;
-import home.iot.home.chart.ChartLineDescription;
-import home.iot.home.dto.Chart;
-import home.iot.home.dto.ChartData;
-import home.iot.home.dto.ChartDataSets;
 
 @Controller
 public class ChartCaptorController {

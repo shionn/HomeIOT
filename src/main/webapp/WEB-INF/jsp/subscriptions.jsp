@@ -19,10 +19,15 @@
 	</thead>
 	<tbody>
 		<c:forEach items="${subscriptions}" var="sub">
+			<spring:url value="/subscriptions/${sub.id}" var="url"/>
 			<tr>
 				<td>${sub.captor.name}</td>
 				<td>${sub.captor.lastValue} ${sub.captor.unit.symbol}</td>
 				<td>${sub.host} <em>${sub.hostname}</em></td>
+				<td>
+					<a href="${url}/notify">Notifier</a>
+					<a href="${url}/remove">Supprimer</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
