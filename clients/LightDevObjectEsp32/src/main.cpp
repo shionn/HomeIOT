@@ -1,7 +1,10 @@
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
-#include <ESP8266WebServer.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <WebServer.h>
+// #include <ESP8266WiFi.h>
+// #include <ESP8266HTTPClient.h>
+// #include <ESP8266WebServer.h>
 #include <uri/UriBraces.h>
 
 #define SSID_NAME "AsusHome"
@@ -15,7 +18,7 @@
 
 HTTPClient http;
 WiFiClient client;
-ESP8266WebServer server(80);
+WebServer server(80);
 
 void initWifi() {
 	WiFi.disconnect(true);
@@ -56,9 +59,9 @@ void receiveCaptorValue() {
 	Serial.println(value);
 	if (captor == CAPTOR) {
 		if (value.equalsIgnoreCase("on")) {
-			digitalWrite(LED_BUILTIN, LOW);
-		} else {
 			digitalWrite(LED_BUILTIN, HIGH);
+		} else {
+			digitalWrite(LED_BUILTIN, LOW);
 		}
 	}
 	server.send(200, "text/plain", "OK");
@@ -69,7 +72,7 @@ void setup() {
 	Serial.begin(9600);
 	initWifi();
 	pinMode(LED_BUILTIN, OUTPUT);
-	digitalWrite(LED_BUILTIN, HIGH);
+	digitalWrite(LED_BUILTIN, LOW);
 
 	server.on(UriBraces("/captor/{}"), HTTP_PUT, receiveCaptorValue);
 	server.on(UriBraces("/captor/{}"), HTTP_POST, receiveCaptorValue);

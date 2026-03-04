@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -54,6 +55,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@EnableWebMvc
 	// @EnableScheduling
+	@EnableAsync
 	@Configuration
 	@ComponentScan({ "home.iot" })
 	@PropertySource("classpath:ha.properties")
