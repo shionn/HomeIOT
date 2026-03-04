@@ -8,7 +8,7 @@
 #define SSID_PASS "aazzeerrttyy"
 #define HOST_NAME "LightObjectDev"
 
-#define CAPTOR 110
+#define CAPTOR 201
 
 //#define HOST_HOMEIOT "http://homeiot/captor/"
 #define HOST_HOMEIOT "http://192.168.10.32:8080/HomeIOT/captor/"
@@ -42,7 +42,7 @@ void initWifi() {
 void subscrib() {
 	String url = HOST_HOMEIOT + String(CAPTOR) + String("/register");
 	if (http.begin(client, url)) {
-		int status = http.POST("");
+		http.POST("");
 		Serial.println(http.getString());
 		http.end();
 	}
@@ -54,7 +54,15 @@ void receiveCaptorValue() {
 	Serial.print(captor);
 	Serial.print(" Receive ");
 	Serial.println(value);
+	if (captor == CAPTOR) {
+		if (value.equalsIgnoreCase("on")) {
+			digitalWrite(LED_BUILTIN, LOW);
+		} else {
+			digitalWrite(LED_BUILTIN, HIGH);
+		}
+	}
 	server.send(200, "text/plain", "OK");
+
 }
 
 void setup() {

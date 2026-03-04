@@ -6,7 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CaptorUnit {
-	Celcius("°");
+	Celcius("°"),
+	None("");
 
 	private final String symbol;
 }

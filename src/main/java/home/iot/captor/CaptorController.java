@@ -62,6 +62,7 @@ public class CaptorController {
 				.build();
 		dao.register(subscription);
 		session.commit();
+		notifier.notify(id);
 		return "OK";
 	}
 

@@ -24,6 +24,7 @@
 		<nav>
 			<a href="<spring:url value="/"/>"><img src="<spring:url value="/img/favicon.gif"/>"/></a>
 			<ul>
+				<li><a href="<spring:url value="/lights"/>">Lumiéres</a></li>
 				<li><a href="<spring:url value="/temperatures"/>">Températures</a></li>
 				<li><a href="<spring:url value="/subscriptions"/>">Abonnements</a></li>
 			</ul>
