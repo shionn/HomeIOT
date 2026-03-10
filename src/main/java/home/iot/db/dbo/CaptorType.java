@@ -3,6 +3,7 @@ package home.iot.db.dbo;
 public enum CaptorType {
 	TEMP,
 	LIGHT_STATE,
-	LIGHT_MODE,
-	LIGHT_COLOR;
+	LIGHT_HSV,
+	LIGHT_RGB,
+	LIGHT_MODE;
 }
