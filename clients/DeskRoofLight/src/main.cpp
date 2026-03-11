@@ -5,17 +5,9 @@
 #include <uri/UriBraces.h>
 #include <Adafruit_NeoPixel.h>
 
-#define SSID_NAME "AsusHome"
-#define SSID_PASS "aazzeerrttyy"
-#define HOST_NAME "LightObjectDev"
-
-#define CAPTOR_STATE 130
-#define CAPTOR_HSV 131
-#define LED_PIN GPIO_NUM_4
-#define LED_LEN 8
+#include "config.h"
 
 #define HOST_HOMEIOT "http://homeiot/captor/"
-// #define HOST_HOMEIOT "http://192.168.10.32:8080/HomeIOT/captor/"
 
 HTTPClient http;
 WiFiClient client;
