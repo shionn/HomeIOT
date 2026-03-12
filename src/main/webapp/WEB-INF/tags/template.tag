@@ -14,10 +14,11 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <title>HomeIOT</title>
 <link rel="stylesheet" href="<spring:url value="/css/mvp.css"/>" />
-<link rel="stylesheet" href="<spring:url value="/css/font-awesome.css"/>" />
+<link rel="stylesheet" href="<spring:url value="/css/fa-4.7/font-awesome.css"/>" />
 <link rel="stylesheet" href="<spring:url value="/css/style.css"/>" />
+<link rel="stylesheet" href="<spring:url value="/css/colorpicker.min.css"/>" />
 <link rel="icon" href="<spring:url value="/img/favicon.gif"/>" type="image/x-icon">
-<link rel="shortcut icon" href="<spring:url value="/img/favicon.gif"/>" type="image/x-icon"> </head>
+<link rel="shortcut icon" href="<spring:url value="/img/favicon.gif"/>" type="image/x-icon">
 </head>
 <body>
 	<header>
@@ -37,7 +38,7 @@
 		<hr>
 		<p>Home IOT by <a href="mailto:shionn@gmail.com">shionn</a></p>
 	</footer>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="<spring:url value="/js/chart.js"/>"></script>
 	<script src="<spring:url value="/js/scripts.js"/>"></script>
 	<script src="<spring:url value="/js/autochart.js"/>"></script>
 	<jsp:invoke fragment="scripts" />

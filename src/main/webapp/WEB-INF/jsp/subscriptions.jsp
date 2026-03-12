@@ -23,7 +23,7 @@
 			<tr>
 				<td>${sub.captor.name}</td>
 				<td>${sub.captor.lastValue} ${sub.captor.unit.symbol}</td>
-				<td>${sub.host} <em>${sub.hostname}</em></td>
+				<td>${sub.hostname} <small><em>(${sub.host})</em></small></td>
 				<td>
 					<a href="${url}/notify">Notifier</a>
 					<a href="${url}/remove">Supprimer</a>

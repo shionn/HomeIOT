@@ -28,4 +28,12 @@ public class SubscriptionController {
 		return "redirect:/subscriptions";
 	}
 
+	@GetMapping(path = { "/subscriptions/{id}/remove" })
+	public String remove(@PathVariable("id") int id) {
+		CaptorSubscriptionDao dao = session.getMapper(CaptorSubscriptionDao.class);
+		dao.removeSubscription(id);
+		session.commit();
+		return "redirect:/subscriptions";
+	}
+
 }

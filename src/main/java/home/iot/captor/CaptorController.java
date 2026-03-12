@@ -1,5 +1,8 @@
 package home.iot.captor;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +61,21 @@ public class CaptorController {
 				.builder()
 				.captorId(id)
 				.host(req.getRemoteAddr())
-				.hostname(req.getRemoteHost())
+				.hostname(retreiveHostname(req))
 				.build();
 		dao.register(subscription);
 		session.commit();
 		notifier.notify(id);
 		return "OK";
+	}
+
+	private String retreiveHostname(HttpServletRequest req) {
+		try {
+			InetAddress inetAddress = InetAddress.getByName(req.getRemoteAddr());
+			return inetAddress.getHostName();
+		} catch (UnknownHostException e) {
+			return req.getRemoteHost();
+		}
 	}
 
 }

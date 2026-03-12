@@ -2,6 +2,7 @@ package home.iot.db.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -70,6 +71,8 @@ public interface CaptorSubscriptionDao {
 			""")
 	int register(CaptorSubscription subscription);
 
+	@Delete("DELETE FROM captor_subscription WHERE id = #{id}")
+	int removeSubscription(int id);
 
 
 }
