@@ -16,7 +16,8 @@
 		<tr>
 			<th>#</th>
 			<th>Light</th>
-			<th>HSV</th>
+			<th>Mode</th>
+			<th colspan="2">HSV</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,7 +30,22 @@
 				</td>
 				<td>${l.name}</td>
 				<td>
+					<c:if test="${empty l.mode}">
+						static
+					</c:if>
+					<c:if test="${not empty l.mode}">
+						<select name="mode" data-url="${url}${l.mode.id}/">
+							<c:forEach items="${modes}" var="m">
+								<option value='${m}' <c:if test="${l.mode.lastValue == m}">selected="selected"</c:if>>${m}
+							</c:forEach>
+						</select>
+					</c:if>
+				</td>
+				<td>
 					<button id="button${l.hsv.id}" data-color="${l.cssHsv}" data-url="${url}${l.hsv.id}/"></button>
+					<c:if test="${not empty l.hsv2}">
+						<button id="button${l.hsv2.id}" data-color="${l.cssHsv2}" data-url="${url}${l.hsv2.id}/"></button>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

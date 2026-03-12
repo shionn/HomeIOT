@@ -1,5 +1,6 @@
 package home.iot.captor.light;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,7 +25,9 @@ public class LightController {
 	@GetMapping("/lights")
 	public ModelAndView listLights() {
 		List<Light> lights = session.getMapper(LightDao.class).list();
-		return new ModelAndView("lights").addObject("lights", lights);
+		return new ModelAndView("lights") //
+				.addObject("lights", lights) //
+				.addObject("modes", Arrays.asList("static", "rainbow", "theatre", "breath", "crawl"));
 	}
 
 	@GetMapping("/lights/{id}/{value:.+}")

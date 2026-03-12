@@ -3,4 +3,8 @@ nav img {
   width: 300%;
 }
 
+table select {
+  margin: 0;
+}
+
 /*# sourceMappingURL=style.css.map */

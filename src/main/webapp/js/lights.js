@@ -1,7 +1,7 @@
 'use strict';
 
 q("table button").each(function() {
-	const picker = new ColorPicker('#'+this.attr('id'), {
+	new ColorPicker('#'+this.attr('id'), {
 		enableAlpha: false,
 		defaultFormat: 'hsv',
 		submitMode: 'confirm', // 'instant' | 'confirm'
@@ -11,8 +11,11 @@ q("table button").each(function() {
 	}).on('pick', (color) => {
 		var val = color.string('hsv');
 		val = val.replace(/[()%]/g,'');
-//		val = val.replace(/,/g,'_');
 		q.ajax(this.attr('data-url')+val).process();
 	});
+});
+
+q("table select").on("change", function() {
+	q.ajax(q(this).attr('data-url')+q(this).value()).process();
 });
 

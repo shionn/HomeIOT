@@ -24,8 +24,30 @@ public class Light {
 		return getCaptor(CaptorType.LIGHT_HSV);
 	}
 
+	public Captor getHsv2() {
+		return getCaptor(CaptorType.LIGHT_HSV_2);
+	}
+
+	public Captor getMode() {
+		return getCaptor(CaptorType.LIGHT_MODE);
+	}
+
 	public String getCssHsv() {
-		Captor captor = getCaptor(CaptorType.LIGHT_HSV);
+		return getCssHsv(CaptorType.LIGHT_HSV);
+
+	}
+
+	public String getCssHsv2() {
+		return getCssHsv(CaptorType.LIGHT_HSV_2);
+
+	}
+
+	public boolean isOn() {
+		return "on".equalsIgnoreCase(getState().getLastValue());
+	}
+
+	private String getCssHsv(CaptorType type) {
+		Captor captor = getCaptor(type);
 		if (captor == null) {
 			return "hsv(0, 100%, 100%, 1);";
 		}
@@ -37,11 +59,6 @@ public class Light {
 		sat = sat * 100 / 255;
 		val = val * 100 / 255;
 		return "hsv(" + hue + "," + sat + "%," + val + "%);";
-
-	}
-
-	public boolean isOn() {
-		return "on".equalsIgnoreCase(getState().getLastValue());
 	}
 
 	private Captor getCaptor(CaptorType type) {
