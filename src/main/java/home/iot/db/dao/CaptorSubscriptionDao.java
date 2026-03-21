@@ -17,7 +17,7 @@ public interface CaptorSubscriptionDao {
 			c.name, c.last_value, c.type, c.unit
 			FROM captor_subscription AS s
 			LEFT JOIN captor AS c On c.id = s.captor
-			ORDER BY name
+			ORDER BY name, hostname, type
 			""")
 	@Results({ //
 			@Result(property = "captor.id", column = "captor_id"), //

@@ -8,6 +8,7 @@
 #include "config.h"
 
 #define HOST_HOMEIOT "http://homeiot/captor/"
+// #define __DEBUG__
 
 HTTPClient http;
 WiFiClient client;
@@ -31,25 +32,31 @@ void initWifi() {
 	WiFi.begin(SSID_NAME, SSID_PASS);
 
 	while (!WiFi.isConnected()) {
+		#ifdef __DEBUG__
 		Serial.print(".");
+		#endif
 		digitalWrite(LED_BUILTIN, LOW);
 		delay(50);
 		digitalWrite(LED_BUILTIN, HIGH);
 		delay(50);
 	}
+	#ifdef __DEBUG__
 	Serial.println();
 	Serial.print("Connected. Ip: ");
 	Serial.println(WiFi.localIP().toString());
 
 	Serial.print("Connected. Mac: ");
 	Serial.println(WiFi.macAddress());
+	#endif
 }
 
 void subscrib(uint captor) {
 	String url = HOST_HOMEIOT + String(captor) + String("/register");
 	if (http.begin(client, url)) {
 		http.POST("");
+		#ifdef __DEBUG__
 		Serial.println(http.getString());
+		#endif
 		http.end();
 	}
 }
@@ -57,9 +64,11 @@ void subscrib(uint captor) {
 void receiveCaptorValue() {
 	int captor = server.pathArg(0).toInt();
 	String value = server.arg("plain");
+	#ifdef __DEBUG__
 	Serial.print(captor);
 	Serial.print(" Receive ");
 	Serial.println(value);
+	#endif
 	if (captor == CAPTOR_STATE) {
 		state = value.equalsIgnoreCase("on");
 	} else if (captor == CAPTOR_HSV) {
@@ -70,16 +79,22 @@ void receiveCaptorValue() {
 		mode = value;
 	}
 	server.send(200, "text/plain", "OK");
+}
 
+void receiveNotFound() {
+	server.send(404);
 }
 
 void setup() {
+	#ifdef __DEBUG__
 	Serial.begin(9600);
+	#endif
 	pinMode(LED_BUILTIN, OUTPUT);
 	initWifi();
 
 	server.on(UriBraces("/captor/{}"), HTTP_PUT, receiveCaptorValue);
 	server.on(UriBraces("/captor/{}"), HTTP_POST, receiveCaptorValue);
+	server.onNotFound(receiveNotFound);
 	server.begin();
 
 	subscrib(CAPTOR_STATE);
