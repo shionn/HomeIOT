@@ -3,3 +3,5 @@
 .settings
 .settings/
 config.h
+/src/main/webapp/js/ajax.js
+/src/main/webapp/js/scripts.js
