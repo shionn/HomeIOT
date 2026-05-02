@@ -97,7 +97,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	@Bean
 	@Scope(value = "prototype")
 	public Logger logger(InjectionPoint point) {
-		return LoggerFactory.getLogger(point.getClass());
+		return LoggerFactory.getLogger(point.getMember().getDeclaringClass().getSimpleName());
 	}
 
 }

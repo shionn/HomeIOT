@@ -63,6 +63,7 @@ public class CaptorController {
 				.host(req.getRemoteAddr())
 				.hostname(retreiveHostname(req))
 				.build();
+		logger.info("Register Subscription " + id + " : " + req.getRemoteAddr());
 		dao.register(subscription);
 		session.commit();
 		notifier.notify(id);
