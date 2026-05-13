@@ -1,6 +1,6 @@
 #!/bin/sh
 
-mvn clean package
+mvn clean package -P O11DW
 echo "deploy"
 #sudo mkdir /usr/share/homeiot/
 sudo cp target/*.jar /usr/share/homeiot/
